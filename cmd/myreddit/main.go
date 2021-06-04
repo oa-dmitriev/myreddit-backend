@@ -4,7 +4,6 @@ import (
 	"log"
 	"myreddit/pkg/handler"
 	"myreddit/pkg/middleware"
-	"os"
 
 	"myreddit/pkg/post"
 	"myreddit/pkg/user"
@@ -40,6 +39,5 @@ func main() {
 		authorized.DELETE("/api/posts/:postId", handler.DeletePost)
 		authorized.GET("api/posts/:category/:id/like", handler.Like)
 	}
-	os.Setenv("PORT", "8080")
 	r.Run()
 }

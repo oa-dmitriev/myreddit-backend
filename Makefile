@@ -1,7 +1,7 @@
 all: run
 
 build: .
-	go run ./cmd/myreddit/main.go -o ./bin/myreddit
+	go build -o ./bin/myreddit ./cmd/myreddit/main.go 
 
 run: build
-	go run ./bin/myreddit
+	./bin/myreddit
