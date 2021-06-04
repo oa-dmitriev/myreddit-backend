@@ -23,7 +23,7 @@ type UserRepo struct {
 
 func NewUserRepo() (*UserRepo, error) {
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
-		"password=%s sslmode=disable",
+		"password=%s",
 		host, port, user, password)
 	db, err := sql.Open("postgres", psqlInfo)
 	if err != nil {
