@@ -16,7 +16,7 @@ type PostHandler struct {
 func (h *PostHandler) GetAll(c *gin.Context) {
 	posts, err := h.PostRepo.GetAll()
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, "sorry")
+		c.JSON(http.StatusInternalServerError, err.Error())
 		return
 	}
 	c.JSON(http.StatusOK, posts)
