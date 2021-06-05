@@ -27,9 +27,8 @@ func main() {
 	r := gin.Default()
 	r.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"https://myreddit-frontend.herokuapp.com"},
-		AllowMethods:     []string{"PUT", "PATCH"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "OPTIONS"},
 		AllowHeaders:     []string{"Origin"},
-		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
 	}))
 	r.POST("/api/register", userHandler.Register)
@@ -41,11 +40,9 @@ func main() {
 
 	authorized := r.Group("/")
 	authorized.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"https://myreddit-frontend.herokuapp.com"},
-		AllowMethods:     []string{"PUT", "PATCH"},
-		AllowHeaders:     []string{"Origin"},
-		ExposeHeaders:    []string{"Content-Length"},
-		AllowCredentials: true,
+		AllowOrigins: []string{"https://myreddit-frontend.herokuapp.com"},
+		AllowMethods: []string{"GET", "POST", "PUT", "PATCH", "OPTIONS"},
+		AllowHeaders: []string{"Origin"},
 	}))
 	authorized.Use(middleware.AuthRequired())
 	{
