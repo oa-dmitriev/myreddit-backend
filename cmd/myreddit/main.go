@@ -6,16 +6,10 @@ import (
 	"myreddit/pkg/middleware"
 	"myreddit/pkg/post"
 	"myreddit/pkg/user"
-	"net/http"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
-
-func test(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"token": "hola",
-	})
-}
 
 func main() {
 	userRepo, err := user.NewUserRepo()
@@ -31,7 +25,13 @@ func main() {
 	}
 
 	r := gin.Default()
-	r.GET("/", test)
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"https://myreddit-frontend.herokuapp.com"},
+		AllowMethods:     []string{"PUT", "PATCH"},
+		AllowHeaders:     []string{"Origin"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+	}))
 	r.POST("/api/register", userHandler.Register)
 	r.POST("/api/login", userHandler.Login)
 
