@@ -40,8 +40,14 @@ func main() {
 	r.GET("/api/posts/:category/:id", handler.GetById)
 
 	authorized := r.Group("/")
+	authorized.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"https://myreddit-frontend.herokuapp.com"},
+		AllowMethods:     []string{"PUT", "PATCH"},
+		AllowHeaders:     []string{"Origin"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+	}))
 	authorized.Use(middleware.AuthRequired())
-	log.Println("TELL ME WAT YOU NEED")
 	{
 		authorized.POST("/api/posts", handler.NewPost)
 		authorized.POST("/api/posts/:id", handler.NewComment)
