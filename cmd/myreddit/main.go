@@ -8,8 +8,8 @@ import (
 	"myreddit/pkg/user"
 	"time"
 
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	cors "github.com/itsjamie/gin-cors"
 )
 
 func main() {
@@ -26,13 +26,14 @@ func main() {
 	}
 
 	r := gin.Default()
-	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"https://myreddit-frontend.herokuapp.com/"},
-		AllowMethods:     []string{"PUT", "PATCH"},
-		AllowHeaders:     []string{"Origin"},
-		ExposeHeaders:    []string{"Content-Length"},
-		AllowCredentials: true,
-		MaxAge:           12 * time.Hour,
+	r.Use(cors.Middleware(cors.Config{
+		Origins:         "*",
+		Methods:         "GET, PUT, POST, DELETE",
+		RequestHeaders:  "Origin, Authorization, Content-Type",
+		ExposedHeaders:  "",
+		MaxAge:          50 * time.Second,
+		Credentials:     true,
+		ValidateHeaders: false,
 	}))
 	r.POST("/api/register", userHandler.Register)
 	r.POST("/api/login", userHandler.Login)
@@ -42,13 +43,14 @@ func main() {
 	r.GET("/api/posts/:category/:id", handler.GetById)
 
 	authorized := r.Group("/")
-	authorized.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"https://myreddit-frontend.herokuapp.com/"},
-		AllowMethods:     []string{"PUT", "PATCH"},
-		AllowHeaders:     []string{"Origin"},
-		ExposeHeaders:    []string{"Content-Length"},
-		AllowCredentials: true,
-		MaxAge:           12 * time.Hour,
+	authorized.Use(cors.Middleware(cors.Config{
+		Origins:         "*",
+		Methods:         "GET, PUT, POST, DELETE",
+		RequestHeaders:  "Origin, Authorization, Content-Type",
+		ExposedHeaders:  "",
+		MaxAge:          50 * time.Second,
+		Credentials:     true,
+		ValidateHeaders: false,
 	}))
 	authorized.Use(middleware.AuthRequired())
 	{

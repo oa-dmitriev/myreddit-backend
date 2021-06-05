@@ -3,9 +3,6 @@ github.com/davecgh/go-spew/spew
 # github.com/dgrijalva/jwt-go v3.2.0+incompatible
 ## explicit
 github.com/dgrijalva/jwt-go
-# github.com/gin-contrib/cors v1.3.1
-## explicit
-github.com/gin-contrib/cors
 # github.com/gin-contrib/sse v0.1.0
 github.com/gin-contrib/sse
 # github.com/gin-gonic/gin v1.6.3
@@ -24,8 +21,13 @@ github.com/go-playground/universal-translator
 github.com/go-playground/validator/v10
 # github.com/golang/protobuf v1.3.3
 github.com/golang/protobuf/proto
+# github.com/itsjamie/gin-cors v0.0.0-20160420130702-97b4a9da7933
+## explicit
+github.com/itsjamie/gin-cors
 # github.com/json-iterator/go v1.1.9
 github.com/json-iterator/go
+# github.com/kr/pretty v0.1.0
+## explicit
 # github.com/leodido/go-urn v1.2.0
 github.com/leodido/go-urn
 # github.com/lib/pq v1.10.0
@@ -56,6 +58,8 @@ golang.org/x/sys/unix
 # gopkg.in/DATA-DOG/go-sqlmock.v1 v1.3.0
 ## explicit
 gopkg.in/DATA-DOG/go-sqlmock.v1
+# gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127
+## explicit
 # gopkg.in/stretchr/testify.v1 v1.2.2
 ## explicit
 # gopkg.in/yaml.v2 v2.2.8
