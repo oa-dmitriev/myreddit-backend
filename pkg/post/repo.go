@@ -15,6 +15,24 @@ func NewPostRepo(db *sql.DB) *PostRepo {
 	return &PostRepo{db}
 }
 
+func (repo *PostRepo) GetCategories() ([]*Category, error) {
+	rows, err := repo.db.Query("SELECT name, description FROM categories")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	categories := make([]*Category, 0)
+	for rows.Next() {
+		category := Category{}
+		err := rows.Scan(&category.Name, &category.Description)
+		if err != nil {
+			return nil, err
+		}
+		categories = append(categories, &category)
+	}
+	return categories, nil
+}
+
 func (repo *PostRepo) GetAll() ([]*Post, error) {
 	sqlQuery := `
 		SELECT post_id, score, text, title, category, created_at, 
@@ -91,6 +109,15 @@ func (repo *PostRepo) DeletePost(postId string, u *user.User) ([]*Post, error) {
 		return nil, err
 	}
 	return repo.GetAll()
+}
+
+func (repo *PostRepo) NewCategory(u *user.User, c *Category) error {
+	sqlStatement := `
+		INSERT INTO categories (name, description) 
+		VALUES ($1, $2)
+	`
+	_, err := repo.db.Exec(sqlStatement, c.Name, c.Description)
+	return err
 }
 
 func (repo *PostRepo) NewPost(u *user.User, p *Post) (*Post, error) {

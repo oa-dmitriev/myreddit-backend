@@ -13,6 +13,15 @@ type PostHandler struct {
 	PostRepo *post.PostRepo
 }
 
+func (h *PostHandler) GetCategories(c *gin.Context) {
+	categories, err := h.PostRepo.GetCategories()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+	c.JSON(http.StatusOK, categories)
+}
+
 func (h *PostHandler) GetAll(c *gin.Context) {
 	posts, err := h.PostRepo.GetAll()
 	log.Println("getALL!")
@@ -20,7 +29,6 @@ func (h *PostHandler) GetAll(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, err.Error())
 		return
 	}
-	log.Println("getALLFINISH!")
 	c.JSON(http.StatusOK, posts)
 }
 
@@ -102,6 +110,28 @@ func (h *PostHandler) DeletePost(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, posts)
+}
+
+func (h *PostHandler) NewCategory(c *gin.Context) {
+	u, err := getUser(c)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, "user is not found")
+		return
+	}
+
+	category := &post.Category{}
+	err = c.BindJSON(category)
+	if err != nil {
+		log.Println("BindJson: ", err)
+		c.JSON(http.StatusInternalServerError, "oops")
+		return
+	}
+	err = h.PostRepo.NewCategory(u, category)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+	c.JSON(http.StatusOK, nil)
 }
 
 func (h *PostHandler) NewPost(c *gin.Context) {

@@ -22,3 +22,8 @@ type Comment struct {
 	Body      string     `json:"body"`
 	CreatedAt string     `json:"created"`
 }
+
+type Category struct {
+	Name        string `json:"name"`
+	Description string `json:"description"`
+}

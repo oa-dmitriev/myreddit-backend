@@ -37,7 +37,7 @@ func main() {
 	}))
 	r.POST("/api/register", userHandler.Register)
 	r.POST("/api/login", userHandler.Login)
-
+	r.GET("/api/category", handler.GetCategories)
 	r.GET("/api/posts", handler.GetAll)
 	r.GET("/api/posts/:category", handler.GetAllByCategory)
 	r.GET("/api/posts/:category/:id", handler.GetById)
@@ -54,11 +54,12 @@ func main() {
 	}))
 	authorized.Use(middleware.AuthRequired())
 	{
+		authorized.POST("/api/category", handler.NewCategory)
 		authorized.POST("/api/posts", handler.NewPost)
 		authorized.POST("/api/posts/:id", handler.NewComment)
 		authorized.DELETE("/api/posts/:postId/:commentId", handler.DeleteComment)
 		authorized.DELETE("/api/posts/:postId", handler.DeletePost)
-		authorized.GET("api/posts/:category/:id/like", handler.Like)
+		authorized.GET("/api/posts/:category/:id/like", handler.Like)
 	}
 	r.Run()
 }

@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"fmt"
-	"log"
 	"myreddit/internal/token"
 	"myreddit/pkg/user"
 	"net/http"
@@ -13,15 +12,13 @@ import (
 
 func AuthRequired() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		_, err := token.ExtractToken(c)
+		fmt.Println("WELKRJWELRJWKERJWLERJKW\nwlekrjwlekjrwle")
+		user, err := getUser(c)
 		if err != nil {
 			c.AbortWithStatusJSON(
 				http.StatusUnauthorized,
 				"unautharized, dude")
 		}
-		log.Println("AUTHTHTUITUOITUTOI")
-		fmt.Println("WELKRJWELRJWKERJWLERJKW\n\n\nwlekrjwlekjrwle")
-		user, err := getUser(c)
 		c.Set("user", user)
 	}
 }

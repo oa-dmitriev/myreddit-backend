@@ -90,6 +90,15 @@ func NewUserRepo() (*UserRepo, error) {
 	if err != nil {
 		return nil, err
 	}
+	_, err = db.Exec(`
+		CREATE TABLE IF NOT EXISTS categories (
+			name				text NOT NULL,
+			description text NOT NULL
+		)
+	`)
+	if err != nil {
+		return nil, err
+	}
 	return &UserRepo{data: map[string]*User{}, Db: db}, nil
 }
 
