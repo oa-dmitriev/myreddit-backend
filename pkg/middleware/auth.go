@@ -12,7 +12,6 @@ import (
 
 func AuthRequired() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		fmt.Println("WELKRJWELRJWKERJWLERJKW\nwlekrjwlekjrwle")
 		user, err := getUser(c)
 		if err != nil {
 			c.AbortWithStatusJSON(

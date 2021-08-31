@@ -209,7 +209,6 @@ func (repo *PostRepo) Like(u *user.User, postId string) (*Post, bool, error) {
 		if err != nil {
 			return nil, false, err
 		}
-		p.Votes = getVotes(repo.db, postId)
 		return p, true, nil
 	}
 	_, err := repo.db.Exec(`

@@ -239,13 +239,13 @@ func TestDeletePost(t *testing.T) {
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			mock.ExpectExec(tc.postDeleteQuery).
-				WithArgs(sqlmock.AnyArg()).
-				WillReturnResult(sqlmock.NewResult(0, 0))
 			mock.ExpectExec(tc.commentsDeleteQuery).
 				WithArgs(sqlmock.AnyArg()).
 				WillReturnResult(sqlmock.NewResult(0, 0))
 			mock.ExpectExec(tc.votesDeleteQuery).
+				WithArgs(sqlmock.AnyArg()).
+				WillReturnResult(sqlmock.NewResult(0, 0))
+			mock.ExpectExec(tc.postDeleteQuery).
 				WithArgs(sqlmock.AnyArg()).
 				WillReturnResult(sqlmock.NewResult(0, 0))
 			mock.ExpectQuery(tc.getQuery).

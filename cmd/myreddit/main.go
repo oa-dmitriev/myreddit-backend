@@ -43,15 +43,6 @@ func main() {
 	r.GET("/api/posts/:category/:id", handler.GetById)
 
 	authorized := r.Group("/")
-	authorized.Use(cors.Middleware(cors.Config{
-		Origins:         "*",
-		Methods:         "GET, PUT, POST, DELETE",
-		RequestHeaders:  "Origin, Authorization, Content-Type",
-		ExposedHeaders:  "",
-		MaxAge:          50 * time.Second,
-		Credentials:     true,
-		ValidateHeaders: false,
-	}))
 	authorized.Use(middleware.AuthRequired())
 	{
 		authorized.POST("/api/category", handler.NewCategory)
